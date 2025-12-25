@@ -8,6 +8,8 @@ import Confetti from './components/Confetti'
 import Snowflakes from './components/Snowflakes'
 import ThemeToggle from './components/ThemeToggle'
 import LandingPage from './components/LandingPage'
+import MerryEffect from './components/MerryEffect'
+import MerryChristmasBanner from './components/MerryChristmasBanner'
 import './App.css'
 
 const LANGUAGES = ['js', 'py', 'java', 'cpp', 'rust', 'go', 'ts', 'php']
@@ -18,6 +20,8 @@ function App() {
   const [showResult, setShowResult] = useState(false)
   const [confettiTrigger, setConfettiTrigger] = useState(0)
   const [showInteractiveTerminal, setShowInteractiveTerminal] = useState(false)
+  const [merryTrigger, setMerryTrigger] = useState(0)
+  const [merryChristmasTrigger, setMerryChristmasTrigger] = useState(0)
   const audioRef = useRef(null)
 
   useEffect(() => {
@@ -30,6 +34,15 @@ function App() {
   }, [hasStarted])
 
   const handleResultComplete = useCallback(() => {
+    setConfettiTrigger(prev => prev + 1)
+  }, [])
+
+  const handleMerryCommand = useCallback(() => {
+    setMerryTrigger(prev => prev + 1)
+  }, [])
+
+  const handleMerryChristmasCommand = useCallback(() => {
+    setMerryChristmasTrigger(prev => prev + 1)
     setConfettiTrigger(prev => prev + 1)
   }, [])
 
@@ -69,6 +82,8 @@ function App() {
     <div className="app">
       <Snowflakes />
       <Confetti trigger={confettiTrigger} />
+      <MerryEffect trigger={merryTrigger} />
+      <MerryChristmasBanner trigger={merryChristmasTrigger} />
       
       <div className="app-container">
         <header className="app-header">
@@ -85,7 +100,12 @@ function App() {
           <p className="app-subtitle">A Coding Celebration</p>
         </header>
 
-        {showInteractiveTerminal && <InteractiveTerminal />}
+        {showInteractiveTerminal && (
+          <InteractiveTerminal 
+            onMerryCommand={handleMerryCommand}
+            onMerryChristmasCommand={handleMerryChristmasCommand}
+          />
+        )}
 
         <Terminal showResult={showResult} onResultComplete={handleResultComplete} />
 

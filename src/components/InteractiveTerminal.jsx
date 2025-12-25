@@ -12,11 +12,11 @@ const COMMANDS = {
   clear: 'clear'
 }
 
-function InteractiveTerminal() {
+function InteractiveTerminal({ onMerryCommand, onMerryChristmasCommand }) {
   const [history, setHistory] = useState([
     { type: 'output', content: 'Welcome to the Interactive Terminal!' },
     { type: 'output', content: 'Type "help" to see available commands.' },
-    { type: 'output', content: 'Try: echo "Merry Christmas!" or type "merry" or "christmas"' }
+    { type: 'output', content: 'Try: echo "Merry Christmas!" or type "merry" or "merry christmas"' }
   ])
   const [input, setInput] = useState('')
   const [currentPath, setCurrentPath] = useState('~/merry-christmas')
@@ -30,17 +30,41 @@ function InteractiveTerminal() {
   }, [history])
 
   const handleCommand = (cmd) => {
-    const [command, ...args] = cmd.trim().split(' ')
-    const lowerCmd = command.toLowerCase()
+    const lowerCmd = cmd.trim().toLowerCase()
+    
+    if (lowerCmd === 'merry christmas') {
+      setHistory(prev => [...prev,
+        { type: 'input', content: `$ ${cmd}` },
+        { type: 'output', content: '🎄🎅 MERRY CHRISTMAS! 🎅🎄' }
+      ])
+      if (onMerryChristmasCommand) {
+        onMerryChristmasCommand()
+      }
+      return
+    }
 
-    if (lowerCmd === 'clear') {
+    const [command, ...args] = cmd.trim().split(' ')
+    const lowerCommand = command.toLowerCase()
+
+    if (lowerCommand === 'clear') {
       setHistory([])
       return
     }
 
-    if (COMMANDS[lowerCmd]) {
-      if (typeof COMMANDS[lowerCmd] === 'function') {
-        const result = COMMANDS[lowerCmd](args)
+    if (lowerCommand === 'merry') {
+      setHistory(prev => [...prev,
+        { type: 'input', content: `$ ${cmd}` },
+        { type: 'output', content: '🎄 MERRY 🎄' }
+      ])
+      if (onMerryCommand) {
+        onMerryCommand()
+      }
+      return
+    }
+
+    if (COMMANDS[lowerCommand]) {
+      if (typeof COMMANDS[lowerCommand] === 'function') {
+        const result = COMMANDS[lowerCommand](args)
         setHistory(prev => [...prev, 
           { type: 'input', content: `$ ${cmd}` },
           { type: 'output', content: result }
@@ -48,7 +72,7 @@ function InteractiveTerminal() {
       } else {
         setHistory(prev => [...prev,
           { type: 'input', content: `$ ${cmd}` },
-          { type: 'output', content: COMMANDS[lowerCmd] }
+          { type: 'output', content: COMMANDS[lowerCommand] }
         ])
       }
     } else if (command) {

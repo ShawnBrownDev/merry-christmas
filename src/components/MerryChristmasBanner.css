@@ -1,0 +1,93 @@
+.merry-christmas-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10000;
+  overflow: hidden;
+  animation: fadeInOut 4s ease-in-out;
+}
+
+.banner-text {
+  display: flex;
+  gap: 40px;
+  white-space: nowrap;
+  animation: scrollAcross 3s linear;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.banner-word {
+  font-size: 8rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #4ade80 0%, #82aaff 50%, #c792ea 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(74, 222, 128, 0.5);
+  animation: glow 1s ease-in-out infinite alternate;
+  font-family: 'SF Mono', 'Monaco', monospace;
+  letter-spacing: 0.1em;
+}
+
+.banner-word:nth-child(1),
+.banner-word:nth-child(4),
+.banner-word:nth-child(7),
+.banner-word:nth-child(10) {
+  font-size: 10rem;
+  animation: glow 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes scrollAcross {
+  0% {
+    transform: translateX(-100%) translateY(-50%);
+  }
+  100% {
+    transform: translateX(100vw) translateY(-50%);
+  }
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes glow {
+  from {
+    filter: drop-shadow(0 0 10px rgba(74, 222, 128, 0.5));
+  }
+  to {
+    filter: drop-shadow(0 0 30px rgba(130, 170, 255, 0.8));
+  }
+}
+
+@media (max-width: 768px) {
+  .banner-word {
+    font-size: 4rem;
+  }
+
+  .banner-word:nth-child(1),
+  .banner-word:nth-child(4),
+  .banner-word:nth-child(7),
+  .banner-word:nth-child(10) {
+    font-size: 5rem;
+  }
+
+  .banner-text {
+    gap: 20px;
+  }
+}
+
