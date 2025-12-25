@@ -1,0 +1,142 @@
+.terminal {
+  background: var(--terminal-bg);
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  border: 1px solid var(--terminal-border);
+}
+
+.terminal-header {
+  background: var(--terminal-header);
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid var(--terminal-border);
+}
+
+.terminal-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.btn-close {
+  background: #ff5f56;
+}
+
+.btn-minimize {
+  background: #ffbd2e;
+}
+
+.btn-maximize {
+  background: #27c93f;
+}
+
+.terminal-title {
+  color: var(--text-secondary);
+  font-size: 12px;
+  flex: 1;
+  font-weight: 500;
+}
+
+.terminal-body {
+  padding: 24px;
+  background: var(--terminal-bg);
+  position: relative;
+  min-height: 320px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.code-line {
+  display: flex;
+  margin-bottom: 4px;
+  font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+}
+
+.line-number {
+  color: var(--text-secondary);
+  margin-right: 20px;
+  user-select: none;
+  min-width: 35px;
+  text-align: right;
+  opacity: 0.5;
+  font-size: 13px;
+}
+
+.code-content {
+  flex: 1;
+  word-break: break-word;
+}
+
+.keyword {
+  color: var(--keyword);
+}
+
+.function-name {
+  color: var(--function);
+}
+
+.variable {
+  color: var(--variable);
+}
+
+.string {
+  color: var(--string);
+}
+
+.comment {
+  color: var(--comment);
+  font-style: italic;
+}
+
+.output {
+  color: var(--output);
+}
+
+.result {
+  color: var(--result);
+  font-weight: 600;
+}
+
+.output-line {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--terminal-border);
+}
+
+.cursor {
+  display: inline-block;
+  color: var(--text-primary);
+  animation: blink 1s infinite;
+  margin-left: 2px;
+  font-weight: bold;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@media (max-width: 768px) {
+  .terminal-body {
+    padding: 18px;
+  }
+
+  .code-line {
+    font-size: 12px;
+  }
+
+  .line-number {
+    min-width: 25px;
+    margin-right: 12px;
+  }
+}
+

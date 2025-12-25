@@ -1,0 +1,125 @@
+.code-preview {
+  background: var(--terminal-bg);
+  border-radius: 0 12px 12px 12px;
+  padding: 0;
+  min-height: 200px;
+  font-size: 14px;
+  line-height: 1.9;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--terminal-border);
+  font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+  overflow: hidden;
+}
+
+.code-preview-header {
+  background: var(--terminal-header);
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--terminal-border);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.code-preview-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.action-btn {
+  background: var(--terminal-bg);
+  border: 1px solid var(--terminal-border);
+  color: var(--text-primary);
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: 'SF Mono', monospace;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.action-btn:hover {
+  background: var(--terminal-border);
+  transform: translateY(-1px);
+}
+
+.action-btn:active {
+  transform: translateY(0);
+}
+
+.copy-btn:hover {
+  border-color: var(--function);
+  color: var(--function);
+}
+
+.execute-btn:hover {
+  border-color: var(--result);
+  color: var(--result);
+}
+
+.code-preview-content {
+  padding: 30px;
+  white-space: pre;
+  color: var(--text-primary);
+  overflow-x: auto;
+}
+
+.code-output {
+  background: var(--terminal-header);
+  border-top: 1px solid var(--terminal-border);
+  padding: 15px 30px;
+  animation: slideUp 0.3s ease-out;
+}
+
+.output-label {
+  color: var(--text-secondary);
+  font-size: 12px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.output-content {
+  color: var(--result);
+  font-weight: 600;
+  font-size: 16px;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.code-preview-content {
+  white-space: pre;
+  color: var(--text-primary);
+}
+
+.code-preview-content .keyword {
+  color: var(--keyword);
+}
+
+.code-preview-content .string {
+  color: var(--string);
+}
+
+.code-preview-content .comment {
+  color: var(--comment);
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .code-preview {
+    padding: 20px;
+    font-size: 12px;
+    line-height: 1.7;
+  }
+}
+

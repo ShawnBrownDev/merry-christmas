@@ -1,0 +1,30 @@
+.theme-toggle {
+  background: var(--terminal-header);
+  border: 1px solid var(--terminal-border);
+  color: var(--text-primary);
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'SF Mono', monospace;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--terminal-bg);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 222, 128, 0.2);
+}
+
+.theme-icon {
+  font-size: 16px;
+}
+
+.theme-name {
+  font-weight: 500;
+}
+

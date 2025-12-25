@@ -1,0 +1,32 @@
+.ascii-art {
+  background: var(--terminal-bg);
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  font-size: 10px;
+  line-height: 1.2;
+  color: var(--accent);
+  font-family: 'Courier New', monospace;
+  white-space: pre;
+  overflow-x: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--terminal-border);
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ascii-art pre {
+  margin: 0;
+  font-family: inherit;
+}
+
+@media (max-width: 768px) {
+  .ascii-art {
+    font-size: 6px;
+    padding: 20px;
+    min-height: 80px;
+  }
+}
+
