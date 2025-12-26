@@ -1,7 +1,14 @@
 import { useState, useEffect } from 'react'
 import './ThemeToggle.css'
 
-const THEMES = {
+type Theme = 'dark' | 'cyberpunk' | 'neon'
+
+interface ThemeInfo {
+  name: string
+  icon: string
+}
+
+const THEMES: Record<Theme, ThemeInfo> = {
   dark: {
     name: 'Dark',
     icon: '🌙'
@@ -16,8 +23,12 @@ const THEMES = {
   }
 }
 
-function ThemeToggle({ onThemeChange }) {
-  const [currentTheme, setCurrentTheme] = useState('dark')
+interface ThemeToggleProps {
+  onThemeChange?: (theme: Theme) => void
+}
+
+function ThemeToggle({ onThemeChange }: ThemeToggleProps) {
+  const [currentTheme, setCurrentTheme] = useState<Theme>('dark')
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', currentTheme)
@@ -26,7 +37,7 @@ function ThemeToggle({ onThemeChange }) {
     }
   }, [currentTheme, onThemeChange])
 
-  const themes = Object.keys(THEMES)
+  const themes = Object.keys(THEMES) as Theme[]
   const currentIndex = themes.indexOf(currentTheme)
 
   const nextTheme = () => {

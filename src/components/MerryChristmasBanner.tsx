@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react'
 import './MerryChristmasBanner.css'
 
-function MerryChristmasBanner({ trigger }) {
-  const [show, setShow] = useState(false)
+interface MerryChristmasBannerProps {
+  trigger: number
+}
+
+function MerryChristmasBanner({ trigger }: MerryChristmasBannerProps) {
+  const [show, setShow] = useState<boolean>(false)
 
   useEffect(() => {
     if (trigger > 0) {

@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react'
 import './MerryEffect.css'
 
-function MerryEffect({ trigger }) {
-  const [show, setShow] = useState(false)
+interface MerryEffectProps {
+  trigger: number
+}
+
+function MerryEffect({ trigger }: MerryEffectProps) {
+  const [show, setShow] = useState<boolean>(false)
 
   useEffect(() => {
     if (trigger > 0) {

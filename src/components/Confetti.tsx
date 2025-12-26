@@ -1,8 +1,12 @@
 import { useEffect, useRef } from 'react'
 import './Confetti.css'
 
-function Confetti({ trigger }) {
-  const containerRef = useRef(null)
+interface ConfettiProps {
+  trigger: number
+}
+
+function Confetti({ trigger }: ConfettiProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!trigger || !containerRef.current) return
@@ -33,7 +37,9 @@ function Confetti({ trigger }) {
       }, 5000)
     }
     
-    containerRef.current.appendChild(fragment)
+    if (containerRef.current) {
+      containerRef.current.appendChild(fragment)
+    }
   }, [trigger])
 
   return <div ref={containerRef} className="confetti-container" />

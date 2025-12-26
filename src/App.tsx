@@ -12,17 +12,19 @@ import MerryEffect from './components/MerryEffect'
 import MerryChristmasBanner from './components/MerryChristmasBanner'
 import './App.css'
 
-const LANGUAGES = ['js', 'py', 'java', 'cpp', 'rust', 'go', 'ts', 'php']
+type Language = 'js' | 'py' | 'java' | 'cpp' | 'rust' | 'go' | 'ts' | 'php'
+
+const LANGUAGES: Language[] = ['js', 'py', 'java', 'cpp', 'rust', 'go', 'ts', 'php']
 
 function App() {
-  const [hasStarted, setHasStarted] = useState(false)
-  const [selectedLanguage, setSelectedLanguage] = useState('js')
-  const [showResult, setShowResult] = useState(false)
-  const [confettiTrigger, setConfettiTrigger] = useState(0)
-  const [showInteractiveTerminal, setShowInteractiveTerminal] = useState(false)
-  const [merryTrigger, setMerryTrigger] = useState(0)
-  const [merryChristmasTrigger, setMerryChristmasTrigger] = useState(0)
-  const audioRef = useRef(null)
+  const [hasStarted, setHasStarted] = useState<boolean>(false)
+  const [selectedLanguage, setSelectedLanguage] = useState<Language>('js')
+  const [showResult, setShowResult] = useState<boolean>(false)
+  const [confettiTrigger, setConfettiTrigger] = useState<number>(0)
+  const [showInteractiveTerminal, setShowInteractiveTerminal] = useState<boolean>(false)
+  const [merryTrigger, setMerryTrigger] = useState<number>(0)
+  const [merryChristmasTrigger, setMerryChristmasTrigger] = useState<number>(0)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
 
   useEffect(() => {
     if (hasStarted) {
@@ -72,7 +74,6 @@ function App() {
     }
     setHasStarted(true)
   }
-
 
   if (!hasStarted) {
     return <LandingPage onStart={handleStart} />

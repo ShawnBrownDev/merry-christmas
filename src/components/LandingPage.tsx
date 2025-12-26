@@ -1,7 +1,10 @@
 import './LandingPage.css'
 
-function LandingPage({ onStart }) {
+interface LandingPageProps {
+  onStart: () => void
+}
 
+function LandingPage({ onStart }: LandingPageProps) {
   const handleStart = () => {
     onStart()
   }
@@ -21,4 +24,4 @@ function LandingPage({ onStart }) {
 }
 
 export default LandingPage
-3
+

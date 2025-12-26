@@ -1,27 +1,45 @@
 import { useState, useRef, useEffect } from 'react'
 import './InteractiveTerminal.css'
 
-const COMMANDS = {
+type CommandValue = string | ((args: string[]) => string)
+
+interface Commands {
+  [key: string]: CommandValue
+}
+
+const COMMANDS: Commands = {
   help: 'Available commands: help, clear, ls, whoami, date, echo, merry, christmas',
   ls: 'merry_christmas.js  README.md  package.json  src/',
   whoami: 'developer',
   date: new Date().toLocaleString(),
-  echo: (args) => args.join(' '),
+  echo: (args: string[]) => args.join(' '),
   merry: '🎄 MERRY 🎄',
   christmas: '🎅 CHRISTMAS 🎅',
   clear: 'clear'
 }
 
-function InteractiveTerminal({ onMerryCommand, onMerryChristmasCommand }) {
-  const [history, setHistory] = useState([
+type HistoryItemType = 'input' | 'output' | 'error'
+
+interface HistoryItem {
+  type: HistoryItemType
+  content: string
+}
+
+interface InteractiveTerminalProps {
+  onMerryCommand?: () => void
+  onMerryChristmasCommand?: () => void
+}
+
+function InteractiveTerminal({ onMerryCommand, onMerryChristmasCommand }: InteractiveTerminalProps) {
+  const [history, setHistory] = useState<HistoryItem[]>([
     { type: 'output', content: 'Welcome to the Interactive Terminal!' },
     { type: 'output', content: 'Type "help" to see available commands.' },
     { type: 'output', content: 'Try: echo "Merry Christmas!" or type "merry" or "merry christmas"' }
   ])
-  const [input, setInput] = useState('')
-  const [currentPath, setCurrentPath] = useState('~/merry-christmas')
-  const inputRef = useRef(null)
-  const terminalRef = useRef(null)
+  const [input, setInput] = useState<string>('')
+  const [currentPath] = useState<string>('~/merry-christmas')
+  const inputRef = useRef<HTMLInputElement>(null)
+  const terminalRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (terminalRef.current) {
@@ -29,7 +47,7 @@ function InteractiveTerminal({ onMerryCommand, onMerryChristmasCommand }) {
     }
   }, [history])
 
-  const handleCommand = (cmd) => {
+  const handleCommand = (cmd: string) => {
     const lowerCmd = cmd.trim().toLowerCase()
     
     if (lowerCmd === 'merry christmas') {
@@ -63,8 +81,9 @@ function InteractiveTerminal({ onMerryCommand, onMerryChristmasCommand }) {
     }
 
     if (COMMANDS[lowerCommand]) {
-      if (typeof COMMANDS[lowerCommand] === 'function') {
-        const result = COMMANDS[lowerCommand](args)
+      const commandValue = COMMANDS[lowerCommand]
+      if (typeof commandValue === 'function') {
+        const result = commandValue(args)
         setHistory(prev => [...prev, 
           { type: 'input', content: `$ ${cmd}` },
           { type: 'output', content: result }
@@ -72,7 +91,7 @@ function InteractiveTerminal({ onMerryCommand, onMerryChristmasCommand }) {
       } else {
         setHistory(prev => [...prev,
           { type: 'input', content: `$ ${cmd}` },
-          { type: 'output', content: COMMANDS[lowerCommand] }
+          { type: 'output', content: commandValue }
         ])
       }
     } else if (command) {
@@ -83,7 +102,7 @@ function InteractiveTerminal({ onMerryCommand, onMerryChristmasCommand }) {
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (input.trim()) {
       handleCommand(input)
@@ -91,9 +110,13 @@ function InteractiveTerminal({ onMerryCommand, onMerryChristmasCommand }) {
     }
   }
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      handleSubmit(e)
+      e.preventDefault()
+      if (input.trim()) {
+        handleCommand(input)
+        setInput('')
+      }
     }
   }
 

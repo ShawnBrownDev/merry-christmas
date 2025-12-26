@@ -11,8 +11,8 @@ const ASCII_TEXT = `
 `
 
 function ASCIIArt() {
-  const [displayedText, setDisplayedText] = useState('')
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [displayedText, setDisplayedText] = useState<string>('')
+  const [currentIndex, setCurrentIndex] = useState<number>(0)
 
   useEffect(() => {
     if (currentIndex < ASCII_TEXT.length) {

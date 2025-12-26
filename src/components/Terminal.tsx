@@ -1,7 +1,19 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
 import './Terminal.css'
 
-const CODE_LINES = [
+type CodePartType = 'keyword' | 'function' | 'variable' | 'string' | 'comment' | 'output' | 'normal'
+
+interface CodePart {
+  content: string
+  type: CodePartType
+}
+
+interface CodeLine {
+  num: number
+  parts: CodePart[]
+}
+
+const CODE_LINES: CodeLine[] = [
   { num: 1, parts: [
     { content: 'function', type: 'keyword' },
     { content: ' merryChristmas', type: 'function' },
@@ -31,10 +43,16 @@ const CODE_LINES = [
   ]},
 ]
 
-function Terminal({ showResult, onResultComplete }) {
-  const [displayedLineIndex, setDisplayedLineIndex] = useState(0)
-  const [typingResult, setTypingResult] = useState('')
-  const [showCursor, setShowCursor] = useState(true)
+interface TerminalProps {
+  showResult: boolean
+  onResultComplete?: () => void
+}
+
+function Terminal({ showResult, onResultComplete }: TerminalProps) {
+  const [displayedLineIndex, setDisplayedLineIndex] = useState<number>(0)
+  const [typingResult, setTypingResult] = useState<string>('')
+  const [showCursor, setShowCursor] = useState<boolean>(true)
+  const hasCalledComplete = useRef<boolean>(false)
 
   useEffect(() => {
     if (displayedLineIndex < CODE_LINES.length) {
@@ -44,8 +62,6 @@ function Terminal({ showResult, onResultComplete }) {
       return () => clearTimeout(timer)
     }
   }, [displayedLineIndex])
-
-  const hasCalledComplete = useRef(false)
 
   useEffect(() => {
     if (showResult && typingResult.length < 'MERRY CHRISTMAS!'.length) {
@@ -68,8 +84,8 @@ function Terminal({ showResult, onResultComplete }) {
     return CODE_LINES.slice(0, displayedLineIndex)
   }, [displayedLineIndex])
 
-  const getClassName = (type) => {
-    const classes = {
+  const getClassName = (type: CodePartType): string => {
+    const classes: Record<CodePartType, string> = {
       keyword: 'keyword',
       function: 'function-name',
       variable: 'variable',

@@ -1,6 +1,8 @@
 import './LanguageTabs.css'
 
-const LANGUAGE_NAMES = {
+type Language = 'js' | 'py' | 'java' | 'cpp' | 'rust' | 'go' | 'ts' | 'php'
+
+const LANGUAGE_NAMES: Record<Language, string> = {
   js: 'JavaScript',
   py: 'Python',
   java: 'Java',
@@ -11,7 +13,13 @@ const LANGUAGE_NAMES = {
   php: 'PHP'
 }
 
-function LanguageTabs({ languages, selectedLanguage, onLanguageChange }) {
+interface LanguageTabsProps {
+  languages: Language[]
+  selectedLanguage: Language
+  onLanguageChange: (lang: Language) => void
+}
+
+function LanguageTabs({ languages, selectedLanguage, onLanguageChange }: LanguageTabsProps) {
   return (
     <div className="language-tabs">
       {languages.map(lang => (

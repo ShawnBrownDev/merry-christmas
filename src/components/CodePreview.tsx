@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react'
 import './CodePreview.css'
 
-const CODE_EXAMPLES = {
+type Language = 'js' | 'py' | 'java' | 'cpp' | 'rust' | 'go' | 'ts' | 'php'
+
+const CODE_EXAMPLES: Record<Language, string> = {
   js: `// JavaScript
 function merryChristmas() {
     const message = "Merry Christmas!";
@@ -100,10 +102,14 @@ echo merryChristmas();
 ?>`
 }
 
-function CodePreview({ language }) {
-  const [copied, setCopied] = useState(false)
-  const [executed, setExecuted] = useState(false)
-  const [output, setOutput] = useState('')
+interface CodePreviewProps {
+  language: Language
+}
+
+function CodePreview({ language }: CodePreviewProps) {
+  const [copied, setCopied] = useState<boolean>(false)
+  const [executed, setExecuted] = useState<boolean>(false)
+  const [output, setOutput] = useState<string>('')
 
   const code = CODE_EXAMPLES[language] || CODE_EXAMPLES.js
 
@@ -131,7 +137,7 @@ function CodePreview({ language }) {
           }
           return merryChristmas();
         `)
-        const result = func()
+        const result = func() as string
         setOutput(result)
         setExecuted(true)
         setTimeout(() => {
@@ -139,7 +145,8 @@ function CodePreview({ language }) {
           setOutput('')
         }, 3000)
       } catch (err) {
-        setOutput('Error: ' + err.message)
+        const error = err as Error
+        setOutput('Error: ' + error.message)
         setExecuted(true)
       }
     } else {
@@ -183,8 +190,8 @@ function CodePreview({ language }) {
   )
 }
 
-function highlightCode(code, lang) {
-  const keywords = {
+function highlightCode(code: string, lang: Language): string {
+  const keywords: Record<Language, string[]> = {
     js: ['function', 'const', 'return', 'console', 'log'],
     py: ['def', 'return', 'print'],
     java: ['public', 'class', 'static', 'String', 'void', 'System', 'out', 'println'],
@@ -213,3 +220,4 @@ function highlightCode(code, lang) {
 }
 
 export default CodePreview
+

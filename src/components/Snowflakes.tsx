@@ -1,13 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
 import './Snowflakes.css'
 
+type Theme = 'dark' | 'cyberpunk' | 'neon'
+
 function Snowflakes() {
-  const containerRef = useRef(null)
-  const [theme, setTheme] = useState('dark')
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [theme, setTheme] = useState<Theme>('dark')
 
   useEffect(() => {
     const updateTheme = () => {
-      setTheme(document.documentElement.getAttribute('data-theme') || 'dark')
+      const currentTheme = (document.documentElement.getAttribute('data-theme') || 'dark') as Theme
+      setTheme(currentTheme)
     }
     
     const observer = new MutationObserver(updateTheme)
@@ -37,14 +40,16 @@ function Snowflakes() {
       snowflake.style.left = Math.random() * 100 + '%'
       snowflake.style.animationDelay = Math.random() * 5 + 's'
       snowflake.style.animationDuration = (Math.random() * 10 + 10) + 's'
-      snowflake.style.opacity = Math.random() * 0.5 + 0.3
+      snowflake.style.opacity = String(Math.random() * 0.5 + 0.3)
       snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px'
       
       container.appendChild(snowflake)
     }
 
     return () => {
-      container.innerHTML = ''
+      if (container) {
+        container.innerHTML = ''
+      }
     }
   }, [theme])
 
